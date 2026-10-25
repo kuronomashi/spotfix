@@ -46,7 +46,7 @@ Desde el engranaje del panel (se guardan en `.spotfix/config.json`, compartido p
 
 - **Rust**: en `Cargo.toml`
   ```toml
-  spotfix-egui = { git = "https://github.com/USUARIO/spotfix" }
+  spotfix-egui = { git = "https://github.com/kuronomashi/spotfix" }
   ```
   Cargo encuentra el crate aunque esté en `rust/spotfix-egui`. Para fijar una versión: `tag = "v0.1.0"`.
 - **JS (Next / React)**: npm no sabe instalar desde una subcarpeta de un repo, así que se publica
@@ -55,7 +55,7 @@ Desde el engranaje del panel (se guardan en `.spotfix/config.json`, compartido p
   2. En GitHub: Releases → nueva release `v0.1.0` → adjuntar `spotfix-0.1.0.tgz`.
   3. En cada proyecto:
      ```bash
-     npm install https://github.com/USUARIO/spotfix/releases/download/v0.1.0/spotfix-0.1.0.tgz
+     npm install https://github.com/kuronomashi/spotfix/releases/download/v0.1.0/spotfix-0.1.0.tgz
      npx spotfix init
      ```
   (Otra opción es `npm publish` desde `js/` y luego `npm install spotfix`.)
