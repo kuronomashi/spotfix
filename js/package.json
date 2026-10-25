@@ -1,0 +1,66 @@
+{
+  "name": "spotfix",
+  "version": "0.1.0",
+  "description": "Botón flotante para dejar notas sobre secciones y componentes de tu app, listas para una IA. Solo en desarrollo.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "./dist/auto.js"
+  ],
+  "bin": {
+    "spotfix": "./dist/cli.js"
+  },
+  "exports": {
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "default": "./dist/react/index.js"
+    },
+    "./next": {
+      "types": "./dist/next/index.d.ts",
+      "default": "./dist/next/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "default": "./dist/vite/index.js"
+    },
+    "./auto": {
+      "types": "./dist/auto.d.ts",
+      "default": "./dist/auto.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "default": "./dist/core/index.js"
+    },
+    "./shared": {
+      "types": "./dist/shared/note.d.ts",
+      "default": "./dist/shared/note.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "modern-screenshot": "^4.7.0"
+  },
+  "peerDependencies": {
+    "next": ">=14",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.0"
+  }
+}

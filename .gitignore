@@ -1,0 +1,11 @@
+# Compilación
+target/
+dist/
+.next/
+node_modules/
+*.tgz
+*.tsbuildinfo
+next-env.d.ts
+.spec
+# Notas de prueba de las demos
+.spotfix/

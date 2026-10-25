@@ -1,0 +1,9 @@
+﻿[package]
+name = "spotfix-egui-demo"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+eframe = "0.37"
+spotfix-egui = { path = "../../rust/spotfix-egui" }

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spotfix.local/note.schema.json",
+  "title": "Cabecera de una nota de spotfix (v1)",
+  "type": "object",
+  "required": ["id", "fecha", "tipo", "estado", "plataforma", "seccion"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^\\d{8}-\\d{6}-[a-z0-9]{4}$" },
+    "fecha": { "type": "string", "format": "date-time" },
+    "tipo": { "enum": ["bug", "sugerencia"] },
+    "estado": { "enum": ["abierta", "hecha"] },
+    "plataforma": { "enum": ["next", "egui", "python-web", "python-qt", "python-tk", "android"] },
+    "seccion": { "type": "string", "maxLength": 300 },
+    "archivo_ruta": { "type": ["string", "null"] },
+    "componente": { "type": ["string", "null"] },
+    "fuente": { "type": ["string", "null"] },
+    "selector": { "type": ["string", "null"] },
+    "texto_visible": { "type": ["string", "null"], "maxLength": 200 },
+    "ventana": { "type": ["string", "null"], "pattern": "^\\d+x\\d+$" },
+    "url": { "type": ["string", "null"] },
+    "capturas": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

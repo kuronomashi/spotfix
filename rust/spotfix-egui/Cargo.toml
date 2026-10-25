@@ -1,0 +1,19 @@
+[package]
+name = "spotfix-egui"
+version = "0.1.0"
+edition = "2021"
+description = "Botón flotante para dejar notas sobre zonas de una app egui, listas para una IA. Solo en debug."
+license = "MIT"
+
+[lib]
+name = "spotfix_egui"
+
+[dependencies]
+egui = "0.37"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
+serde_json = "1"
+
+[dev-dependencies]
+egui_kittest = { version = "0.37", features = ["wgpu"] }
+egui = { version = "0.37", features = ["default_fonts"] }
