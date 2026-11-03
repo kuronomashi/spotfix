@@ -1,0 +1,5 @@
+# JitPack: publica spotfix-compose, spotfix-compose-noop y el plugin spotfix-gradle desde kotlin/.
+jdk:
+  - openjdk17
+install:
+  - cd kotlin && chmod +x gradlew && ./gradlew publishToMavenLocal && ./gradlew -p spotfix-gradle publishToMavenLocal

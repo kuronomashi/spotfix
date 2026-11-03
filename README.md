@@ -41,7 +41,7 @@ Desde el engranaje del panel (se guardan en `.spotfix/config.json`, compartido p
 | React con otro bundler (CRA, webpack…) | Lista (con `npx spotfix serve`) | [js/](js/) |
 | Rust egui / eframe | Lista | [rust/spotfix-egui/](rust/spotfix-egui/) |
 | Python web y escritorio | Pendiente | [python/](python/) |
-| Kotlin Android (Compose) | Pendiente | [kotlin/](kotlin/) |
+| Kotlin Android (Compose) | Lista (notas al proyecto con `gradlew spotfixPull`) | [kotlin/](kotlin/) |
 
 
 - **Rust**: en `Cargo.toml`
@@ -59,8 +59,12 @@ Desde el engranaje del panel (se guardan en `.spotfix/config.json`, compartido p
      npx spotfix init
      ```
   (Otra opción es `npm publish` desde `js/` y luego `npm install spotfix`.)
+- **Kotlin (Android)**: por JitPack, a partir de un tag `v0.1.0` (receta en `jitpack.yml`):
+  `debugImplementation("com.github.kuronomashi.spotfix:spotfix-compose:v0.1.0")`. El plugin y el
+  resto de pasos, en [kotlin/README.md](kotlin/README.md).
 
-`.gitignore` ya deja fuera `target/`, `node_modules/`, `dist/`, `.next/`, `*.tgz` y las notas de las demos.
+`.gitignore` ya deja fuera `target/`, `node_modules/`, `dist/`, `.next/`, `*.tgz`, `build/`, `.gradle/`,
+`local.properties` y las notas de las demos.
 
 ---
 
@@ -69,7 +73,7 @@ Desde el engranaje del panel (se guardan en `.spotfix/config.json`, compartido p
 ### Instalar
 
 ```bash
-npm install <ruta o URL de spotfix-0.1.0.tgz>
+npm install https://github.com/kuronomashi/spotfix/releases/download/v0.1.0/spotfix-0.1.0.tgz
 npx spotfix init
 ```
 
@@ -125,7 +129,7 @@ ruta actual (`location.pathname`, vale con React Router).
 ### Con Vite (lo normal)
 
 ```bash
-npm install <ruta o URL de spotfix-0.1.0.tgz>
+npm install https://github.com/kuronomashi/spotfix/releases/download/v0.1.0/spotfix-0.1.0.tgz
 npx spotfix init
 npm run dev
 ```
@@ -200,8 +204,68 @@ Para quitarlo: borra la dependencia y las llamadas `spotfix_egui::…`.
 
 ---
 
+## Kotlin Android (Compose)
+
+### Instalar
+
+`settings.gradle.kts`:
+
+```kotlin
+pluginManagement {
+    includeBuild("F:/Librerias kuronoma/spotfix/kotlin/spotfix-gradle")
+    // repositories { ... }
+}
+includeBuild("F:/Librerias kuronoma/spotfix/kotlin")
+```
+
+`app/build.gradle.kts`:
+
+```kotlin
+plugins { id("spotfix") }
+
+dependencies {
+    debugImplementation("spotfix:spotfix-compose:0.1.0")
+    releaseImplementation("spotfix:spotfix-compose-noop:0.1.0")   // release sin spotfix
+}
+```
+
+(Con JitPack, en vez de la ruta local: ver [kotlin/README.md](kotlin/README.md).)
+
+### Uso
+
+```kotlin
+setContent {
+    SpotfixOverlay(seccion = ruta) {           // seccion: opcional, nombre de la pantalla
+        Column(Modifier.spotfix("Cabecera")) { // opcional: zonas con nombre
+            ...
+        }
+    }
+}
+```
+
+- Mismo panel que en web y egui. Señalar: toca una zona o arrastra un rectángulo; Atrás cancela.
+- `Modifier.spotfix` guarda `Cabecera < Padre` y el `archivo:línea` donde se escribió.
+- Capturas de la zona o de la pantalla entera, sin la interfaz de spotfix.
+- En release va `spotfix-compose-noop`: el APK no lleva nada de spotfix.
+
+### Llevar las notas al proyecto
+
+Las notas se escriben en el móvil o emulador. Con el dispositivo conectado:
+
+```bash
+./gradlew spotfixPull     # notas nuevas → .spotfix/notas; las "hecha" de la IA → al móvil
+./gradlew spotfixStatus   # cuántas abiertas hay en cada lado
+```
+
+`spotfixPull` no borra nada, cambia la `fuente` por la ruta real del archivo y, si una nota está
+en los dos lados, gana `hecha`.
+
+---
+
 ## Ejemplos
 
 - `examples/next-demo`: `npm install && npm run dev`
 - `examples/react-vite-demo`: `npm install && npm run dev` (necesita el `.tgz` de `js/`: `npm pack` allí)
 - `examples/egui-demo`: `cargo run` (con botón) / `cargo run --release` (sin botón)
+- `examples/compose-demo`: `./gradlew installDebug` (con botón) / `assembleRelease` (sin botón);
+  luego `./gradlew spotfixPull`
